@@ -1,0 +1,17 @@
+name: ray
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  # The python interpreter version.
+  # Currently Azure ML only supports 3.6.0 and later.
+- python=3.8
+- pip
+- jupyterlab
+- pytorch
+- torchvision
+- torchaudio
+- cudatoolkit=11.6
+
+- pip:
+  - ray[default, air, tune, rllib, serve]
