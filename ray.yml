@@ -8,6 +8,8 @@ dependencies:
 - python=3.8
 - pip
 - jupyterlab
+- tqdm
+- scikit-learn
 - pytorch
 - torchvision
 - torchaudio
