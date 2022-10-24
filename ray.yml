@@ -17,3 +17,6 @@ dependencies:
 
 - pip:
   - ray[default, air, tune, rllib, serve]
+  - mlflow
+  - azureml-core
+  - azureml-mlflow

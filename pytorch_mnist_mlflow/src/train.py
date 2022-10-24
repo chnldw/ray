@@ -14,6 +14,8 @@ from ray import air, tune
 from ray.air import session
 from ray.tune.schedulers import AsyncHyperBandScheduler
 
+import mlflow
+
 # Change these values if you want the training to run quicker or slower.
 EPOCH_SIZE = 512
 TEST_SIZE = 256
@@ -104,6 +106,7 @@ def train_mnist(config):
         train(model, optimizer, train_loader, device)
         acc = test(model, test_loader, device)
         # Set this to run Tune.
+        mlflow.log_metric("mean_accuracy", acc)
         session.report({"mean_accuracy": acc})
 
 
@@ -156,7 +159,10 @@ if __name__ == "__main__":
         ),
         param_space={
             "lr": tune.loguniform(1e-4, 1e-2),
-            "momentum": tune.uniform(0.1, 0.9)
+            "momentum": tune.uniform(0.1, 0.9),
+            "mlflow": {
+                "tracking_uri": mlflow.get_tracking_uri(),
+            },
         },
     )
     results = tuner.fit()
