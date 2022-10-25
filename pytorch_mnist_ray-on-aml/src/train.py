@@ -145,7 +145,7 @@ if __name__ == "__main__":
         elif args.ray_address:
             ray.init(address=args.ray_address)
         else:
-            ray.init(num_cpus=2 if args.smoke_test else None)
+            ray.init(ignore_reinit_error=True, num_cpus=2 if args.smoke_test else None)
 
         # for early stopping
         sched = AsyncHyperBandScheduler()
