@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+
+experiment_name: pytorch_mnist_mlflow
+
+code: ./src
+
+command: |
+  sleep 10
+  ray status
+  python train.py
+
+environment: azureml:ray-torch@latest
+
+compute: azureml:compute-gpu
+
+resources:
+  instance_count: 2
+
+environment_variables:
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: "true"
+  _AZUREML_CR_START_RAY: "true"
+
+# distribution:
+#     type: ray
