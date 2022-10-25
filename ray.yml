@@ -5,18 +5,21 @@ channels:
 dependencies:
   # The python interpreter version.
   # Currently Azure ML only supports 3.6.0 and later.
-- python=3.8
-- pip
-- jupyterlab
-- tqdm
-- scikit-learn
-- pytorch
-- torchvision
-- torchaudio
-- cudatoolkit=11.6
+  - python=3.8
+  - pip
+  - pywin32
+  - jupyterlab
+  - tqdm
+  - scikit-learn
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pytorch-lightning
+  - lightning-bolts
+  - cudatoolkit=11.6
 
-- pip:
-  - ray[default, air, tune, rllib, serve]
-  - mlflow
-  - azureml-core
-  - azureml-mlflow
+  - pip:
+      - ray[default, air, tune, rllib, serve]
+      - mlflow
+      - azureml-core
+      - azureml-mlflow

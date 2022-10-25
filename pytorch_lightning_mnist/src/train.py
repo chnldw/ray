@@ -16,8 +16,6 @@ from ray.tune.examples.mnist_ptl_mini import LightningMNISTClassifier
 
 @mlflow_mixin
 def train_mnist_tune(config, data_dir=None, num_epochs=10, num_gpus=0):
-    mlflow.autolog()
-
     model = LightningMNISTClassifier(config, data_dir)
     dm = MNISTDataModule(
         data_dir=data_dir, num_workers=1, batch_size=config["batch_size"]
@@ -27,7 +25,6 @@ def train_mnist_tune(config, data_dir=None, num_epochs=10, num_gpus=0):
     trainer = pl.Trainer(
         max_epochs=num_epochs,
         gpus=num_gpus,
-        # progress_bar_refresh_rate=0,
         callbacks=[TuneReportCallback(metrics, on="validation_end")],
     )
     trainer.fit(model, dm)
@@ -45,8 +42,8 @@ def tune_mnist(
     MNISTDataModule(data_dir=data_dir).prepare_data()
 
     # Set the MLflow experiment, or create it if it does not exist.
-    # mlflow.set_tracking_uri(tracking_uri)
-    # mlflow.set_experiment(experiment_name)
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_experiment(experiment_name)
 
     config = {
         "layer_1": tune.choice([32, 64, 128]),
@@ -54,7 +51,7 @@ def tune_mnist(
         "lr": tune.loguniform(1e-4, 1e-1),
         "batch_size": tune.choice([32, 64, 128]),
         "mlflow": {
-            # "experiment_name": experiment_name,
+            "experiment_name": experiment_name,
             "tracking_uri": mlflow.get_tracking_uri(),
         },
         "data_dir": os.path.join(tempfile.gettempdir(), "mnist_data_"),
