@@ -9,7 +9,7 @@ command: |
   ray status
   python train.py
 
-environment: azureml:ray-torch@latest
+environment: azureml:ray-torch-ray-on-aml@latest
 
 compute: azureml:compute-gpu
 
