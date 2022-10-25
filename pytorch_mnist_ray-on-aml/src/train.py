@@ -15,7 +15,7 @@ from ray.air import session
 from ray.train.torch import TorchCheckpoint
 from ray.tune.schedulers import AsyncHyperBandScheduler
 
-from ray_on_aml.core import Ray_On_AML
+from ray_on_aml import Ray_On_AML
 
 # Change these values if you want the training to run quicker or slower.
 EPOCH_SIZE = 512
