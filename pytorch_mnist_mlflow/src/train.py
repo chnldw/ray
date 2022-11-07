@@ -14,7 +14,11 @@ from ray import air, tune
 from ray.air import session
 from ray.tune.schedulers import AsyncHyperBandScheduler
 
+from ray.air.callbacks.mlflow import MLflowLoggerCallback
+
 import mlflow
+from mlflow.utils.mlflow_tags import MLFLOW_PARENT_RUN_ID
+
 
 # Change these values if you want the training to run quicker or slower.
 EPOCH_SIZE = 512
@@ -106,7 +110,7 @@ def train_mnist(config):
         train(model, optimizer, train_loader, device)
         acc = test(model, test_loader, device)
         # Set this to run Tune.
-        mlflow.log_metric("mean_accuracy", acc)
+        # mlflow.log_metric("mean_accuracy", acc)
         session.report({"mean_accuracy": acc})
 
 
@@ -141,6 +145,8 @@ if __name__ == "__main__":
     # for early stopping
     sched = AsyncHyperBandScheduler()
 
+    current_run = mlflow.active_run()
+
     resources_per_trial = {"cpu": 2, "gpu": int(args.cuda)}  # set this for GPUs
     tuner = tune.Tuner(
         tune.with_resources(train_mnist, resources=resources_per_trial),
@@ -164,6 +170,12 @@ if __name__ == "__main__":
                 "tracking_uri": mlflow.get_tracking_uri(),
             },
         },
+        callbacks=[MLflowLoggerCallback(
+            tracking_uri=mlflow.get_tracking_uri(),
+            tags={
+                MLFLOW_PARENT_RUN_ID: current_run.info.run_id
+            },
+            save_artifact=True)],
     )
     results = tuner.fit()
 

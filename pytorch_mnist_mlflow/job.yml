@@ -10,10 +10,9 @@ command: |
   python train.py
   ray status
 
-
 environment: azureml:ray-torch@latest
 
-compute: azureml:compute-gpu
+compute: azureml:compute-cpu
 
 resources:
   instance_count: 3
@@ -21,6 +20,16 @@ resources:
 environment_variables:
   AZUREML_COMPUTE_USE_COMMON_RUNTIME: "true"
   _AZUREML_CR_START_RAY: "true"
+  AZUREML_COMMON_RUNTIME_USE_INTERACTIVE_CAPABILITY: "True"
 
 # distribution:
 #     type: ray
+
+services:
+  ray_dahboard:
+    job_service_type: Custom
+    port: 8265
+  my_ssh:
+    job_service_type: SSH
+    properties:
+      sshPublicKeys: <ssh-public-keys>
