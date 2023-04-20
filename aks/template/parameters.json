@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "daweil-ray"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "dnsPrefix": {
+            "value": "daweil-ray-dns"
+        },
+        "kubernetesVersion": {
+            "value": "1.24.9"
+        },
+        "networkPlugin": {
+            "value": "kubenet"
+        },
+        "enableRBAC": {
+            "value": true
+        },
+        "nodeResourceGroup": {
+            "value": "MC_daweil-ray_daweil-ray_eastus2"
+        },
+        "upgradeChannel": {
+            "value": "patch"
+        },
+        "adminGroupObjectIDs": {
+            "value": []
+        },
+        "disableLocalAccounts": {
+            "value": false
+        },
+        "azureRbac": {
+            "value": false
+        },
+        "enablePrivateCluster": {
+            "value": false
+        },
+        "enableHttpApplicationRouting": {
+            "value": false
+        },
+        "enableAzurePolicy": {
+            "value": false
+        },
+        "enableSecretStoreCSIDriver": {
+            "value": false
+        },
+        "vmssNodePool": {
+            "value": true
+        },
+        "workspaceName": {
+            "value": "DefaultWorkspace-381b38e9-9840-4719-a5a0-61d9585e1e91-EUS2"
+        },
+        "omsWorkspaceId": {
+            "value": "/subscriptions/381b38e9-9840-4719-a5a0-61d9585e1e91/resourceGroups/DefaultResourceGroup-EUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-381b38e9-9840-4719-a5a0-61d9585e1e91-EUS2"
+        },
+        "workspaceRegion": {
+            "value": "eastus2"
+        }
+    }
+}

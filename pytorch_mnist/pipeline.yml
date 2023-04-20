@@ -1,0 +1,16 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+experiment_name: pytorch_mnist_pipeline
+jobs:
+  ray_job:
+    type: command
+    code: ./src
+    command: python train.py;
+    compute: azureml:serverless
+    environment: azureml:rayproject_ray-ml@latest
+      # image: rayproject/ray-ml:latest
+    resources:
+      instance_type: Standard_DS11_v2
+      instance_count: 3
+    distribution:
+        type: ray

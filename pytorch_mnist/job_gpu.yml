@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+experiment_name: pytorch_mnist_gpu
+code: ./src
+command: python train.py --cuda;
+environment: azureml:rayproject_ray-ml_gpu@latest
+  # image: rayproject/ray-ml:latest-gpu
+resources:
+  instance_type: Standard_ND6s
+  instance_count: 3
+distribution:
+    type: ray
