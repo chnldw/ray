@@ -1,35 +1,11 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-
 experiment_name: pytorch_mnist
-
 code: ./src
-
-command: |
-  sleep 10
-  ray status
-  python train.py
-  ray status
-
-environment: azureml:ray-torch@latest
-
-compute: azureml:compute-cpu
-
+command: python train.py;
+environment: azureml:rayproject_ray-ml@latest
+  # image: rayproject/ray-ml:latest
 resources:
+  instance_type: Standard_DS11_v2
   instance_count: 3
-
-environment_variables:
-  AZUREML_COMPUTE_USE_COMMON_RUNTIME: "true"
-  _AZUREML_CR_START_RAY: "true"
-  AZUREML_COMMON_RUNTIME_USE_INTERACTIVE_CAPABILITY: "True"
-
-# distribution:
-#     type: ray
-
-services:
-  ray_dahboard:
-    job_service_type: Custom
-    port: 8265
-  my_ssh:
-    job_service_type: SSH
-    properties:
-      sshPublicKeys: <ssh-public-keys>
+distribution:
+    type: ray
